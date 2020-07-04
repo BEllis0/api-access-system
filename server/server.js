@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
+const dbConnection = require('../database/config.js');
 
 // env vars config
 require('dotenv').config();
