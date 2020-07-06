@@ -1,10 +1,9 @@
 const faker = require('faker');
-const { dbConnection } = require('./database/config.js');
+const { insertCompanies } = require('./server/models/seedFunctions.js');
+const { truncateTables } = require('./server/models/truncateTables.js');
 
 // number of entries to add to db
-const numOfEntries = 20;
-
-console.log(dbConnection)
+const numOfEntries = 100;
 
 // companies data
 const seedCompany = () => {
@@ -18,17 +17,26 @@ const seedCompany = () => {
         let companyAddressStreet = faker.address.streetAddress();
         let companyAddressState = faker.address.state();
 
-        // db model
-
-
-        console.log({
-            companyName: companyName,
-            suffix: suffix,
-            companySuffix: companySuffix,
-            catchPhrase: catchPhrase,
-            companyImage: companyImage,
-            companyAddressStreet: companyAddressStreet,
-            companyAddressState: companyAddressState
-        });
+        // insert entries into database
+        insertCompanies(companyName, companySuffix, suffix, catchPhrase, companyImage, companyAddressStreet, companyAddressState)
+            .then(res => {
+                console.log('company data added to database');
+            })
+            .catch(err => {
+                console.log(`Error adding company data to database: ${err}`);
+            });
     }
-}
+};
+
+// truncate tables before seeding
+truncateTables('api_limiter.companies')
+    .then(() => {
+
+        // ==== run seed functions ====
+
+        //company data
+        seedCompany();
+    })
+    .catch(err => {
+        console.log(`Error seeding database: ${err}`);
+    });
