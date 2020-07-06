@@ -1,29 +1,33 @@
 const { Pool, Client } = require('pg');
 
-const pool = new Pool({
-    user: 'localhost',
-    host: process.env.HOST,
-    database: process.env.DB,
-    password: process.env.DB_PASS,
-    port: process.env.PORT,
-});
+// const connectionString = `postgresql://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:5432/${process.env.DB}`;
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-});
+// const client = new Client({
+//     connectionString: connectionString
+// });
 
 const client = new Client({
-  user: 'localhost',
+  user: process.env.USER,
   host: process.env.HOST,
-  database: process.env.DB,
+  database: 'api_limiter',
   password: process.env.DB_PASS,
-  port: process.env.PORT,
+  port: '5432',
 });
 
-client.connect();
-
-client.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  client.end()
+client.connect((err) => {
+    if (err) {
+        console.log(`Error connecting to db: ${err}`);
+    } else {
+        console.log('Successfully connected to database');
+    }
 });
+
+// const pool = new Pool({
+//     user: 'localhost',
+//     host: process.env.HOST,
+//     database: process.env.DB,
+//     password: process.env.DB_PASS,
+//     port: process.env.PORT,
+// });
+
+// client.connect();
