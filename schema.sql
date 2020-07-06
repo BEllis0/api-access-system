@@ -1,10 +1,3 @@
-dropdb   api_limiter;
-
--- Create db
-CREATE DATABASE api_limiter;
-
-USE api_limiter;
-
 CREATE SCHEMA api_limiter;
 
 -- users
@@ -27,6 +20,24 @@ CREATE TABLE api_limiter.api_calls (
     _date TIMESTAMP,
     _endpoint VARCHAR(500),
     success BOOLEAN,
-    user_requested BIGINT NOT NULL,
-    FOREIGN KEY(user_requested) REFERENCES users(id)
+    user_requested SERIAL NOT NULL,
+    FOREIGN KEY(user_requested) REFERENCES api_limiter.users(id)
 );
+
+-- API data that users are fetching
+
+-- companies
+CREATE TABLE api_limiter.companies (
+    id SERIAL PRIMARY KEY,
+    company_name VARCHAR(200),
+    company_suffix VARCHAR(200),
+    suffix VARCHAR(200),
+    catch_phrase VARCHAR(500),
+    company_image VARCHAR(500),
+    address_street VARCHAR(200),
+    address_state VARCHAR(200)
+);
+
+-- products
+
+-- stonks

@@ -1,7 +1,10 @@
-const  faker = require('faker');
+const faker = require('faker');
+const { dbConnection } = require('./database/config.js');
 
 // number of entries to add to db
 const numOfEntries = 20;
+
+console.log(dbConnection)
 
 // companies data
 const seedCompany = () => {
