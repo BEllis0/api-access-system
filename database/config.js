@@ -17,3 +17,18 @@ module.exports.dbConnection.connect((err) => {
         console.log('Successfully connected to database');
     }
 });
+
+// handle errors in idle clients
+module.exports.dbConnection.on('error', (err, client) => {
+    if (err) {
+        console.log(`Error in idle client: ${err}`);
+    }
+});
+
+module.exports.dbConnection.on('acquire', (client) => {
+    console.log('Client checked out from the pool')
+});
+
+module.exports.dbConnection.on('remove', (client) => {
+    console.log('Client closed and removed');
+});
