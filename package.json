@@ -7,6 +7,7 @@
     "start": "node server/server.js",
     "start:dev": "node server/server.js nodemon",
     "seed": "node seed.js",
+    "schema": "node schema.sql",
     "test": ""
   },
   "author": "Brandon Ellis",
