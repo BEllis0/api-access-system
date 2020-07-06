@@ -4,7 +4,7 @@ module.exports.insertCompanies = (companyName, companySuffix, suffix, catchPhras
     return new Promise((resolve, reject) => {
         // sql query string
         let companyInsertQuery = {
-            text: `INSERT INTO companies(
+            text: `INSERT INTO api_limiter.companies(
                 company_name,
                 company_suffix,
                 suffix,
