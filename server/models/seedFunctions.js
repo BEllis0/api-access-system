@@ -35,14 +35,35 @@ module.exports.insertCompanies = (companyName, companySuffix, suffix, catchPhras
     });
 };
 
-module.exports.insertProducts = () => {
+module.exports.insertProducts = (productName, department, productImage, color, productMaterial, productAdj, price) => {
     return new Promise((resolve, reject) => {
-        
-    });
-};
+        let productInsertQuery = {
+            text: `INSERT INTO api_limiter.products(
+                product_name,
+                department,
+                product_image,
+                color,
+                product_material,
+                product_adj,
+                price
+            ) VALUES($1, $2, $3, $4, $5, $6, $7)`,
+            values: [
+                `${productName}`,
+                `${department}`,
+                `${productImage}`,
+                `${color}`,
+                `${productMaterial}`,
+                `${productAdj}`,
+                `${price}`
+            ]
+        };
 
-module.exports.insertStocks = () => {
-    return new Promise((resolve, reject) => {
-        
+        dbConnection.query(productInsertQuery, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
     });
 };
