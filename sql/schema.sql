@@ -39,5 +39,13 @@ CREATE TABLE api_limiter.companies (
 );
 
 -- products
-
--- stonks
+CREATE TABLE api_limiter.products (
+    id SERIAL PRIMARY KEY,
+    product_name VARCHAR(500),
+    department VARCHAR(200),
+    product_image VARCHAR(200),
+    color VARCHAR(200),
+    product_material VARCHAR(500),
+    product_adj VARCHAR(200),
+    price INT
+);
