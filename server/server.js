@@ -8,7 +8,10 @@ const dbConnection = require('../database/config.js');
 require('dotenv').config();
 
 // ==== route imports
-
+const productRoutes = require('./routes/products.js');
+const companiesRoutes = require('./routes/companies.js');
+// const userRoutes = require('./routes/users.js');
+// const loginRoutes = require('./routes/login.js');
 
 // express app
 const app = express();
@@ -32,8 +35,13 @@ app.use(express.json());
 // ==== Routes ====
 // ================
 
+app.use('/api/v1/companies', companiesRoutes);
+app.use('/api/v1/products', productRoutes);
 
+// ============
 // start server
+// ============
+
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });

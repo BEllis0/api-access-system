@@ -22,5 +22,19 @@ module.exports = {
                     res.status(400).json({ message: 'Error', error: err });
                 });
         },
+        searchBy: {
+            // individual products - by name
+            name: (req, res) => {
+
+            },
+            // products based on price range
+            suffix: (req, res) => {
+
+            },
+            // products based on color
+            state: (req, res) => {
+
+            }
+        }
     }
 };
