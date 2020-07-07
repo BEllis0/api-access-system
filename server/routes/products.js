@@ -12,3 +12,5 @@ router.get('/price', productControllers.products.searchBy.priceRange);
 
 // by color
 router.get('/:color', productControllers.products.searchBy.color);
+
+module.exports = router;

@@ -12,3 +12,5 @@ router.get('/:suffix', companiesControllers.companies.searchBy.suffix);
 
 // by state
 router.get('/:state', companiesControllers.companies.searchBy.state);
+
+module.exports = router;
