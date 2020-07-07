@@ -2,8 +2,8 @@ const { selectAllProducts } = require('../models/products.js');
 
 module.exports = {
     products: {
-        // all products
 
+        // **** create checkIfLoggedIn func and run it on api request
         // check if user is logged in (has api key param)
 
         // if no api key, restrict api calls
@@ -13,6 +13,8 @@ module.exports = {
             // add request entry to db api call table
 
             // run select companies func and return data
+        
+        // all products
         all: (req, res) => {
             selectAllProducts()
                 .then(data => {
@@ -22,11 +24,20 @@ module.exports = {
                     console.log(`Error selecting and serving all products: ${err}`);
                     res.status(400).json({ message: 'Error', error: err });
                 });
+        },
+        searchBy: {
+            // individual products - by name
+            name: (req, res) => {
+
+            },
+            // products based on price range
+            priceRange: (req, res) => {
+                // min and max params to get range
+            },
+            // products based on color
+            color: (req, res) => {
+
+            }
         }
-        // individual products - by name
-
-        // products based on price range
-
-        // products based on color
     }
 };
