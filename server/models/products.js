@@ -18,10 +18,18 @@ module.exports.selectAllProducts = () => {
 // select data in column by params
 module.exports.selectProductsByParams = (colName, ...params) => {
     return new Promise((resolve, reject) => {
-        let query = {
-            text: ``,
-            values: []
-        };
+
+        let query;
+
+        if (colName === 'price') {
+            query = `SELECT *
+                FROM api_limiter.products
+                WHERE ${colName} BETWEEN ${params[0]} AND ${params[1]}`
+        } else {
+            query = `SELECT * 
+                FROM api_limiter.products
+                WHERE ${colName}="${params}"`;
+        }
 
         dbConnection(query, (err, res) => {
             if (err) {
