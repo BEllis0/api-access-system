@@ -18,10 +18,9 @@ module.exports.selectAllCompanies = () => {
 // select data in column by params
 module.exports.selectCompaniesByParams = (colName, ...params) => {
     return new Promise((resolve, reject) => {
-        let query = {
-            text: ``,
-            values: []
-        };
+        let query = `SELECT *
+                FROM api_limiter.companies
+                WHERE ${colName}="${params[0]}"`;
 
         dbConnection(query, (err, res) => {
             if (err) {
