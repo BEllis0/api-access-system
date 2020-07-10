@@ -1,4 +1,4 @@
-const { selectAllProducts } = require('../models/products.js');
+const { selectAllProducts, selectProductsByParams } = require('../models/products.js');
 
 module.exports = {
     products: {
@@ -21,22 +21,46 @@ module.exports = {
                     res.status(200).json(data);
                 })
                 .catch(err => {
-                    console.log(`Error selecting and serving all products: ${err}`);
+                    console.log('Error querying all products', err);
                     res.status(400).json({ message: 'Error', error: err });
                 });
         },
         searchBy: {
             // individual products - by name
             name: (req, res) => {
-
+                selectProductsByParams('name', req.params.name)
+                    .then(data => {
+                        console.log('product search by name', data);
+                        res.status(200).json(data);
+                    })
+                    .catch(err => {
+                        console.log('Error querying products by name', err);
+                        res.status(400).json({ message: 'Error', error: err });
+                    });
             },
             // products based on price range
             priceRange: (req, res) => {
-                // min and max params to get range
+                selectProductsByParams('price', req.params.min, req.params.max)
+                    .then(data => {
+                        console.log('product search by price', data);
+                        res.status(200).json(data);
+                    })
+                    .catch(err => {
+                        console.log('Error querying products by price', err);
+                        res.status(400).json({ message: 'Error', error: err });
+                    });
             },
             // products based on color
             color: (req, res) => {
-
+                selectProductsByParams('name', req.params.color)
+                    .then(data => {
+                        console.log('product search by color', data);
+                        res.status(200).json(data);
+                    })
+                    .catch(err => {
+                        console.log('Error querying products by color', err);
+                        res.status(400).json({ message: 'Error', error: err });
+                    });
             }
         }
     }
