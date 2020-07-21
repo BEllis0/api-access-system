@@ -10,7 +10,7 @@ require('dotenv').config();
 // ==== route imports
 const productRoutes = require('./routes/products.js');
 const companiesRoutes = require('./routes/companies.js');
-// const userRoutes = require('./routes/users.js');
+const userRoutes = require('./routes/users.js');
 // const loginRoutes = require('./routes/login.js');
 
 // express app
@@ -37,6 +37,7 @@ app.use(express.json());
 
 app.use('/api/v1/companies', companiesRoutes);
 app.use('/api/v1/products', productRoutes);
+app.use('/users', userRoutes);
 
 // ============
 // start server
