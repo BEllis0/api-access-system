@@ -17,7 +17,7 @@ module.exports = {
             let membership = req.body.membership || 'free';
 
             // generate a new api key for the user
-            let newUserApiKey = generateApiKey();
+            let newUserApiKey = generateApiKey().apiKey;
 
             // generate hashed password
             // bcrypt.hash(password, 10, (err, hash) => {
