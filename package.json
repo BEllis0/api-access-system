@@ -8,6 +8,7 @@
     "start:dev": "nodemon server/server.js",
     "seed": "node seed.js",
     "schema": "node schema.sql",
+    "psql:start": "psql -d api_limiter",
     "test": ""
   },
   "author": "Brandon Ellis",
