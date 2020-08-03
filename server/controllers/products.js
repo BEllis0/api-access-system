@@ -16,6 +16,12 @@ module.exports = {
         
         // all products
         all: (req, res) => {
+
+            // check if user is logged in (has api key in body)
+            if (!req.query.key) {
+                res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+            }
+
             selectAllProducts()
                 .then(data => {
                     res.status(200).json(data);
@@ -28,6 +34,12 @@ module.exports = {
         searchBy: {
             // individual products - by name
             name: (req, res) => {
+
+                // check if user is logged in (has api key in body)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectProductsByParams('name', req.params.name)
                     .then(data => {
                         console.log('product search by name', data);
@@ -40,6 +52,12 @@ module.exports = {
             },
             // products based on price range
             priceRange: (req, res) => {
+
+                // check if user is logged in (has api key in body)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectProductsByParams('price', req.params.min, req.params.max)
                     .then(data => {
                         console.log('product search by price', data);
@@ -52,6 +70,12 @@ module.exports = {
             },
             // products based on color
             color: (req, res) => {
+
+                // check if user is logged in (has api key in body)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectProductsByParams('name', req.params.color)
                     .then(data => {
                         console.log('product search by color', data);

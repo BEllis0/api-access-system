@@ -4,7 +4,10 @@ module.exports = {
     companies: {
         all: (req, res) => {
 
-        // check if user is logged in (has api key param)
+        // check if user is logged in (has api key in query params)
+        if (!req.query.key) {
+            res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+        }
 
         // if no api key, restrict api calls
             // use api_cost_tracker to monitor and track user reqs
@@ -25,6 +28,12 @@ module.exports = {
         searchBy: {
             // individual products - by name
             name: (req, res) => {
+
+                // check if user is logged in (has api key in query params)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectCompaniesByParams('name', req.params.name)
                     .then(data => {
                         console.log('company search by name', data);
@@ -37,6 +46,12 @@ module.exports = {
             },
             // products based on price range
             suffix: (req, res) => {
+
+                // check if user is logged in (has api key in body)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectCompaniesByParams('suffix', req.params.suffix)
                     .then(data => {
                         console.log('company search by suffix', data);
@@ -49,6 +64,12 @@ module.exports = {
             },
             // products based on color
             state: (req, res) => {
+
+                // check if user is logged in (has api key in body)
+                if (!req.query.key) {
+                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                }
+
                 selectCompaniesByParams('state', req.params.state)
                     .then(data => {
                         console.log('company search by state', data);
