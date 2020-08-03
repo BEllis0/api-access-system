@@ -17,15 +17,21 @@ module.exports = {
 
             apiKeyValidation(req.query.key)
                 .then(response => {
-
                     console.log('API key validated');
+                    
                     // ====================
                     // TODO: update api call table
                     // - Handle membership tier
                     // - use api_cost_tracker to monitor and track user reqs
                     // ====================
 
+                    if (response.membership_tier === 'free') {
 
+                    } else if (response.membership_tier === 'premium') {
+
+                    } else {
+                        console.log('Error: Membership tier not found');
+                    }
 
                 })
                 .catch(err => {
@@ -38,14 +44,14 @@ module.exports = {
                 });
 
             // get all company data and serve
-            // await selectAllCompanies()
-            //     .then(data => {
-            //         res.status(200).json(data);
-            //     })
-            //     .catch(err => {
-            //         console.log(`Error querying all companies`, err);
-            //         res.status(400).json({ message: 'Error', error: err });
-            //     });
+            await selectAllCompanies()
+                .then(data => {
+                    res.status(200).json(data);
+                })
+                .catch(err => {
+                    console.log(`Error querying all companies`, err);
+                    res.status(400).json({ message: 'Error', error: err });
+                });
         },
         searchBy: {
             // individual products - by name
