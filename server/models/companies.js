@@ -10,7 +10,7 @@ module.exports.selectAllCompanies = () => {
                 reject(err);
             } else {
                 resolve(res);
-            }
+            }   
         });
     });
 };
@@ -22,7 +22,7 @@ module.exports.selectCompaniesByParams = (colName, ...params) => {
                 FROM api_limiter.companies
                 WHERE ${colName}="${params[0]}"`;
 
-        dbConnection(query, (err, res) => {
+        dbConnection.query(query, (err, res) => {
             if (err) {
                 reject(err);
             } else {

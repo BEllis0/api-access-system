@@ -31,7 +31,7 @@ module.exports.selectProductsByParams = (colName, ...params) => {
                 WHERE ${colName}="${params[0]}"`;
         }
 
-        dbConnection(query, (err, res) => {
+        dbConnection.query(query, (err, res) => {
             if (err) {
                 reject(err);
             } else {
