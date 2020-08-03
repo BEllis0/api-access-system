@@ -1,4 +1,5 @@
 const { selectAllProducts, selectProductsByParams } = require('../models/products.js');
+const { apiKeyValidation } = require('../../api_key_validation.js');
 
 module.exports = {
     products: {

@@ -1,29 +1,51 @@
 const { selectAllCompanies, selectCompaniesByParams } = require('../models/companies.js');
+const { apiKeyValidation } = require('../../api_key_validation.js');
 
 module.exports = {
     companies: {
-        all: (req, res) => {
+        all: async (req, res) => {
+            
+            // check if user is logged in (has api key in query params)
+            if (!req.query.key) {
+                res.status(401).json({ 
+                    success: false,
+                    status: 401,
+                    message: 'Unauthorized: API key not found on request body',
+                    error: 'API key required'
+                });
+            }
 
-        // check if user is logged in (has api key in query params)
-        if (!req.query.key) {
-            res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
-        }
+            apiKeyValidation(req.query.key)
+                .then(response => {
 
-        // if no api key, restrict api calls
-            // use api_cost_tracker to monitor and track user reqs
+                    console.log('API key validated');
+                    // ====================
+                    // TODO: update api call table
+                    // - Handle membership tier
+                    // - use api_cost_tracker to monitor and track user reqs
+                    // ====================
 
 
-            // add request entry to db api call table
 
-            // run select companies func and return data
-            selectAllCompanies()
-                .then(data => {
-                    res.status(200).json(data);
                 })
                 .catch(err => {
-                    console.log(`Error querying all companies`, err);
-                    res.status(400).json({ message: 'Error', error: err });
+                    res.status(401).json({
+                        success: false,
+                        status: 401,
+                        message: 'Unauthorized: API key not valid',
+                        error: 'API key not valid' 
+                    });
                 });
+
+            // get all company data and serve
+            // await selectAllCompanies()
+            //     .then(data => {
+            //         res.status(200).json(data);
+            //     })
+            //     .catch(err => {
+            //         console.log(`Error querying all companies`, err);
+            //         res.status(400).json({ message: 'Error', error: err });
+            //     });
         },
         searchBy: {
             // individual products - by name
