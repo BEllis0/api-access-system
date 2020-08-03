@@ -2,7 +2,7 @@
 
 CREATE TABLE api_limiter.users (
     id SERIAL PRIMARY KEY,
-    date_added TIMESTAMP,
+    date_added TIMESTAMP default NOW(),
     first_name VARCHAR(200) NOT NULL,
     last_name VARCHAR(200) NOT NULL,
     username VARCHAR(200) NOT NULL UNIQUE,
