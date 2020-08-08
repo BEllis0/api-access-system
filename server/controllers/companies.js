@@ -1,5 +1,6 @@
 const { selectAllCompanies, selectCompaniesByParams } = require('../models/companies.js');
 const { apiKeyValidation } = require('../../api_key_validation.js');
+const { acountTracker } = require('../../account_tracker.js');
 
 module.exports = {
     companies: {
@@ -15,7 +16,7 @@ module.exports = {
                 });
             }
 
-            apiKeyValidation(req.query.key)
+            await apiKeyValidation(req.query.key)
                 .then(response => {
                     console.log('API key validated');
                     
@@ -24,15 +25,12 @@ module.exports = {
                     // - Handle membership tier
                     // - use api_cost_tracker to monitor and track user reqs
                     // ====================
+                    return acountTracker(response.user_associated, response.membership_tier, req.originalUrl);
 
-                    if (response.membership_tier === 'free') {
-
-                    } else if (response.membership_tier === 'premium') {
-
-                    } else {
-                        console.log('Error: Membership tier not found');
-                    }
-
+                })
+                .then(data => {
+                    // handle true / false
+                    console.log('response from account tracker', data)
                 })
                 .catch(err => {
                     res.status(401).json({
