@@ -15,6 +15,25 @@ module.exports.getApiCalls = userID => {
     });
 };
 
+// get api calls on specific date
+module.exports.getApiCallsByDate = userID => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * 
+            FROM api_limiter.api_calls 
+            WHERE user_requested = ${userID} 
+            AND _date >= now()::date + interval '1h';`;
+
+        dbConnection.query(query, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log('API CALLS BY DATE', res)
+                resolve(res);
+            }
+        });
+    });
+};
+
 // post api call
 module.exports.postApiCalls = (userID, endpoint) => {
     return new Promise((resolve, reject) => {
@@ -22,7 +41,7 @@ module.exports.postApiCalls = (userID, endpoint) => {
             _endpoint,
             success,
             user_requested
-        ), VALUES(
+        ) VALUES(
             '${endpoint}',
             true,
             ${userID}

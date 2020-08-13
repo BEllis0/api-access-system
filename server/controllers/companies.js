@@ -1,12 +1,15 @@
 const { selectAllCompanies, selectCompaniesByParams } = require('../models/companies.js');
 const { apiKeyValidation } = require('../../api_key_validation.js');
-const { acountTracker } = require('../../account_tracker.js');
+const { accountTracker } = require('../../account_tracker.js');
 
 module.exports = {
     companies: {
         all: async (req, res) => {
             
+            // ===================================
             // check if user is logged in (has api key in query params)
+            // ===================================
+            
             if (!req.query.key) {
                 res.status(401).json({ 
                     success: false,
@@ -16,21 +19,29 @@ module.exports = {
                 });
             }
 
+            
+            // ===================================
+            // pass api key into validation function
+            // ===================================
+            
+            // trim endpoint to remove api key param
+            let endpoint = req.originalUrl.slice(0, req.originalUrl.indexOf('?'));
+
             await apiKeyValidation(req.query.key)
                 .then(response => {
-                    console.log('API key validated');
-                    
-                    // ====================
-                    // TODO: update api call table
-                    // - Handle membership tier
-                    // - use api_cost_tracker to monitor and track user reqs
-                    // ====================
-                    return acountTracker(response.user_associated, response.membership_tier, req.originalUrl);
-
+                    // return results from account tracker function
+                    return accountTracker(response.user_associated, response.membership_tier, endpoint);
                 })
                 .then(data => {
                     // handle true / false
-                    console.log('response from account tracker', data)
+                    if (data.success === false) {
+                        res.status(429).json({
+                            success: false,
+                            status: 429,
+                            message: 'Account limit hit. Upgrade for access.',
+                            error: 'API call limit hit' 
+                        });
+                    }
                 })
                 .catch(err => {
                     res.status(401).json({
@@ -41,7 +52,10 @@ module.exports = {
                     });
                 });
 
+            // ===================================
             // get all company data and serve
+            // ===================================
+            
             await selectAllCompanies()
                 .then(data => {
                     res.status(200).json(data);
