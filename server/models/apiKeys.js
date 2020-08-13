@@ -21,7 +21,7 @@ module.exports.addApiKey = (apiKeyObj, membership_tier) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(res);
+                resolve({ api_key: apiKeyObj.apiKey });
             }
         });
     });
