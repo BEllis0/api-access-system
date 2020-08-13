@@ -27,7 +27,6 @@ module.exports.getApiCallsByDate = userID => {
             if (err) {
                 reject(err);
             } else {
-                console.log('API CALLS BY DATE', res)
                 resolve(res);
             }
         });
