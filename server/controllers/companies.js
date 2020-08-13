@@ -55,7 +55,7 @@ module.exports = {
             // ===================================
             // get all company data and serve
             // ===================================
-            
+
             await selectAllCompanies()
                 .then(data => {
                     res.status(200).json(data);
@@ -67,14 +67,59 @@ module.exports = {
         },
         searchBy: {
             // individual products - by name
-            name: (req, res) => {
+            name: async (req, res) => {
 
+                // ===================================
                 // check if user is logged in (has api key in query params)
+                // ===================================
+                
                 if (!req.query.key) {
-                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                    res.status(401).json({ 
+                        success: false,
+                        status: 401,
+                        message: 'Unauthorized: API key not found on request body',
+                        error: 'API key required'
+                    });
                 }
 
-                selectCompaniesByParams('name', req.params.name)
+                
+                // ===================================
+                // pass api key into validation function
+                // ===================================
+                
+                // trim endpoint to remove api key param
+                let endpoint = req.originalUrl.slice(0, req.originalUrl.indexOf('?'));
+
+                await apiKeyValidation(req.query.key)
+                    .then(response => {
+                        // return results from account tracker function
+                        return accountTracker(response.user_associated, response.membership_tier, endpoint);
+                    })
+                    .then(data => {
+                        // handle true / false
+                        if (data.success === false) {
+                            res.status(429).json({
+                                success: false,
+                                status: 429,
+                                message: 'Account limit hit. Upgrade for access.',
+                                error: 'API call limit hit' 
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(401).json({
+                            success: false,
+                            status: 401,
+                            message: 'Unauthorized: API key not valid',
+                            error: 'API key not valid' 
+                        });
+                    });
+
+                // ===================================
+                // get company data by name params and serve
+                // ===================================
+
+                selectCompaniesByParams('company_name', req.query.name)
                     .then(data => {
                         console.log('company search by name', data);
                         res.status(200).json(data);
@@ -85,14 +130,59 @@ module.exports = {
                     });
             },
             // products based on price range
-            suffix: (req, res) => {
+            suffix: async (req, res) => {
 
-                // check if user is logged in (has api key in body)
+                // ===================================
+                // check if user is logged in (has api key in query params)
+                // ===================================
+            
                 if (!req.query.key) {
-                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                    res.status(401).json({ 
+                        success: false,
+                        status: 401,
+                        message: 'Unauthorized: API key not found on request body',
+                        error: 'API key required'
+                    });
                 }
 
-                selectCompaniesByParams('suffix', req.params.suffix)
+                
+                // ===================================
+                // pass api key into validation function
+                // ===================================
+                
+                // trim endpoint to remove api key param
+                let endpoint = req.originalUrl.slice(0, req.originalUrl.indexOf('?'));
+
+                await apiKeyValidation(req.query.key)
+                    .then(response => {
+                        // return results from account tracker function
+                        return accountTracker(response.user_associated, response.membership_tier, endpoint);
+                    })
+                    .then(data => {
+                        // handle true / false
+                        if (data.success === false) {
+                            res.status(429).json({
+                                success: false,
+                                status: 429,
+                                message: 'Account limit hit. Upgrade for access.',
+                                error: 'API call limit hit' 
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(401).json({
+                            success: false,
+                            status: 401,
+                            message: 'Unauthorized: API key not valid',
+                            error: 'API key not valid' 
+                        });
+                    });
+
+                // ===================================
+                // get company data by suffix param and serve
+                // ===================================
+
+                selectCompaniesByParams('suffix', req.query.suffix)
                     .then(data => {
                         console.log('company search by suffix', data);
                         res.status(200).json(data);
@@ -103,14 +193,59 @@ module.exports = {
                     });
             },
             // products based on color
-            state: (req, res) => {
+            state: async (req, res) => {
 
-                // check if user is logged in (has api key in body)
+                // ===================================
+                // check if user is logged in (has api key in query params)
+                // ===================================
+                
                 if (!req.query.key) {
-                    res.status(401).json({ message: 'Unauthorized: API key not found on request body', error: 'API key required' });
+                    res.status(401).json({ 
+                        success: false,
+                        status: 401,
+                        message: 'Unauthorized: API key not found on request body',
+                        error: 'API key required'
+                    });
                 }
 
-                selectCompaniesByParams('state', req.params.state)
+                
+                // ===================================
+                // pass api key into validation function
+                // ===================================
+                
+                // trim endpoint to remove api key param
+                let endpoint = req.originalUrl.slice(0, req.originalUrl.indexOf('?'));
+
+                await apiKeyValidation(req.query.key)
+                    .then(response => {
+                        // return results from account tracker function
+                        return accountTracker(response.user_associated, response.membership_tier, endpoint);
+                    })
+                    .then(data => {
+                        // handle true / false
+                        if (data.success === false) {
+                            res.status(429).json({
+                                success: false,
+                                status: 429,
+                                message: 'Account limit hit. Upgrade for access.',
+                                error: 'API call limit hit' 
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(401).json({
+                            success: false,
+                            status: 401,
+                            message: 'Unauthorized: API key not valid',
+                            error: 'API key not valid' 
+                        });
+                    });
+
+                // ===================================
+                // get company data by state param and serve
+                // ===================================
+
+                selectCompaniesByParams('address_state', req.query.state)
                     .then(data => {
                         console.log('company search by state', data);
                         res.status(200).json(data);
