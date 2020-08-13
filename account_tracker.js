@@ -13,12 +13,7 @@ module.exports.accountTracker = (userID, membershipTier, endpoint) => {
 
         // set the number of calls available for free and premium accounts per day
         let freeLimit = 5;
-        let premiumLimit = 25;
-
-        // hold the value of the current day, 
-        // define on first call of the day and 
-        // only change when day changes
-        let dayReference = new Date();
+        let premiumLimit = 50;
         
         // hold the number of api calls from user per day
         let numOfCalls;
