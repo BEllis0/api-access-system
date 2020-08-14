@@ -28,7 +28,7 @@ module.exports.selectProductsByParams = (colName, ...params) => {
         } else {
             query = `SELECT * 
                 FROM api_limiter.products
-                WHERE ${colName}="${params[0]}"`;
+                WHERE ${colName}='${params[0]}'`;
         }
 
         dbConnection.query(query, (err, res) => {
