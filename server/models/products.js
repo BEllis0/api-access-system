@@ -9,7 +9,7 @@ module.exports.selectAllProducts = () => {
             if (err) {
                 reject(err);
             } else {
-                resolve(res);
+                resolve(res.rows);
             }
         });
     });
@@ -35,7 +35,7 @@ module.exports.selectProductsByParams = (colName, ...params) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(res);
+                resolve(res.rows);
             }
         });
     });
