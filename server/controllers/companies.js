@@ -119,9 +119,9 @@ module.exports = {
                 // get company data by name params and serve
                 // ===================================
 
-                selectCompaniesByParams('company_name', req.query.name)
+
+                await selectCompaniesByParams('company_name', req.query.name)
                     .then(data => {
-                        console.log('company search by name', data);
                         res.status(200).json(data);
                     })
                     .catch(err => {
@@ -131,7 +131,7 @@ module.exports = {
             },
             // products based on price range
             suffix: async (req, res) => {
-
+               
                 // ===================================
                 // check if user is logged in (has api key in query params)
                 // ===================================
@@ -181,8 +181,8 @@ module.exports = {
                 // ===================================
                 // get company data by suffix param and serve
                 // ===================================
-
-                selectCompaniesByParams('suffix', req.query.suffix)
+                
+                await selectCompaniesByParams('company_suffix', req.query.suffix)
                     .then(data => {
                         console.log('company search by suffix', data);
                         res.status(200).json(data);
@@ -245,7 +245,7 @@ module.exports = {
                 // get company data by state param and serve
                 // ===================================
 
-                selectCompaniesByParams('address_state', req.query.state)
+                await selectCompaniesByParams('address_state', req.query.state)
                     .then(data => {
                         console.log('company search by state', data);
                         res.status(200).json(data);

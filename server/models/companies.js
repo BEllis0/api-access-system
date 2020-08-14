@@ -9,7 +9,7 @@ module.exports.selectAllCompanies = () => {
             if (err) {
                 reject(err);
             } else {
-                resolve(res);
+                resolve(res.rows);
             }   
         });
     });
@@ -18,15 +18,15 @@ module.exports.selectAllCompanies = () => {
 // select data in column by params
 module.exports.selectCompaniesByParams = (colName, ...params) => {
     return new Promise((resolve, reject) => {
-        let query = `SELECT *
-                FROM api_limiter.companies
-                WHERE ${colName}="${params[0]}"`;
+
+        console.log('PARAMAS IN SELECT FUNC', params, colName)
+        let query = `SELECT * FROM api_limiter.companies WHERE ${colName} = '${params[0]}'`;
 
         dbConnection.query(query, (err, res) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(res);
+                resolve(res.rows);
             }
         });
     });
