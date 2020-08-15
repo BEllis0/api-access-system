@@ -33,6 +33,25 @@ module.exports.getApiCallsByDate = userID => {
     });
 };
 
+// Querying database for entries between now and start of current minute
+module.exports.getApiCallsByMinute = userID => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * 
+            FROM api_limiter.api_calls 
+            WHERE user_requested = ${userID} 
+            AND _date <= NOW() 
+            AND _date >= (select date_trunc('minute', now()))`;
+
+        dbConnection.query(query, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+};
+
 // post api call
 module.exports.postApiCalls = (userID, endpoint) => {
     return new Promise((resolve, reject) => {
