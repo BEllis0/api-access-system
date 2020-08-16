@@ -9,7 +9,8 @@
     "seed": "node seed.js",
     "schema": "node schema.sql",
     "psql:start": "psql -d api_limiter",
-    "test": ""
+    "test:jest": "",
+    "test:artillery": "artillery run artillery_tests.yml"
   },
   "author": "Brandon Ellis",
   "license": "ISC",
