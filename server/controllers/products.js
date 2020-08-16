@@ -119,7 +119,7 @@ module.exports = {
                 // get all company data and serve
                 // ===================================
 
-                await selectProductsByParams('product_name', req.params.name)
+                await selectProductsByParams('product_name', req.query.name)
                     .then(data => {
                         res.status(200).json(data);
                     })
@@ -181,7 +181,7 @@ module.exports = {
                 // get all company data and serve
                 // ===================================
 
-                await selectProductsByParams('price', req.params.min, req.params.max)
+                await selectProductsByParams('price', req.query.min, req.query.max)
                     .then(data => {
                         res.status(200).json(data);
                     })
@@ -243,7 +243,7 @@ module.exports = {
                 // get all company data and serve
                 // ===================================
 
-                selectProductsByParams('color', req.params.color)
+                selectProductsByParams('color', req.query.color)
                     .then(data => {
                         res.status(200).json(data);
                     })
