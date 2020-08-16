@@ -119,9 +119,8 @@ module.exports = {
                 // get all company data and serve
                 // ===================================
 
-                await selectProductsByParams('name', req.params.name)
+                await selectProductsByParams('product_name', req.params.name)
                     .then(data => {
-                        console.log('product search by name', data);
                         res.status(200).json(data);
                     })
                     .catch(err => {
@@ -184,7 +183,6 @@ module.exports = {
 
                 await selectProductsByParams('price', req.params.min, req.params.max)
                     .then(data => {
-                        console.log('product search by price', data);
                         res.status(200).json(data);
                     })
                     .catch(err => {
@@ -245,9 +243,8 @@ module.exports = {
                 // get all company data and serve
                 // ===================================
 
-                selectProductsByParams('name', req.params.color)
+                selectProductsByParams('color', req.params.color)
                     .then(data => {
-                        console.log('product search by color', data);
                         res.status(200).json(data);
                     })
                     .catch(err => {
