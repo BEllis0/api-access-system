@@ -1,0 +1,15 @@
+config:
+    target: 'http://localhost:3000'
+    phases:
+        - duration: 10
+          arrivalRate: 40
+scenarios:
+  - flow:
+      - get:
+          url: "/api/v1/companies"
+          qs:
+            key: "F0ARZ6B-6SB45BY-M8ZJVN1-JFA37TJ"
+      - get:
+          url: "/api/v1/products"
+          qs:
+            key: "F0ARZ6B-6SB45BY-M8ZJVN1-JFA37TJ"
